@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV@100..900,0&display=swap');
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Geologica', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+body {
+    overflow: hidden;
+    @apply bg-gray-300;
+}
+
+button {
+    @apply cursor-pointer;
+}
+
+svg {
+    pointer-events: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
+.invalid-input {
+    @apply outline-2! outline-red-500!;
+}
+
+.error {
+    @apply text-red-600 text-start w-87.5 ps-4 pt-1 pb-2;
+}
+
+.btn-default {
+    @apply rounded-xl px-4 py-2 hover:bg-gray-200 bg-gray-100 transition-colors ease-in shadow-md/15 hover:scale-105 transition-transform;
+}
+.sqr-btn {
+    @apply px-2 py-2 aspect-square;
+}
+.btn-sm {
+    @apply px-1 py-0 rounded-lg aspect-square;
+}
+.round-btn {
+    @apply px-2 py-2 rounded-full;
+}
+.btn-home {
+    @apply px-2 py-1;
+}
+
+.register-form, .login-form {
+    @apply flex items-center justify-center h-screen;
+
+    > div {
+        @apply text-center px-6 pt-9 pb-7 bg-gray-200 rounded-lg;
+    }
+    .logo {
+        @apply text-2xl mb-8;
+    }
+    form {
+        @apply flex flex-col items-center;
+    }
+    input:not(input[type="checkbox"]), select {
+        @apply bg-white w-87.5 mt-4 px-4 py-3 rounded-lg outline-gray-500;
+    }
+    form button {
+        @apply bg-teal-200 mb-7 hover:bg-teal-300;
+    }
+    .link {
+        @apply text-blue-500 hover:text-blue-700 hover:underline;
+    }
+}
+
+.modal {
+    @apply m-auto relative px-5 py-4 min-w-[35%] max-w-[50%] rounded-lg text-center bg-gray-200 outline-none overflow-hidden;
+
+    
+    .close-btn {
+        @apply mb-3 absolute top-4 right-5;
+    }
+}
+.modal::backdrop {
+    background-color: hsl(0 0 0 / 0.4);
+}
+
+.category:hover {
+    .category-actions {
+        @apply top-0 opacity-100 transition-[top,opacity] duration-300;
+    }
+}
+
+#searchTransactions {
+    @apply flex items-center shadow-md rounded-full relative;
+
+    input {
+        opacity: 0;
+        width: 40px;
+        transition: 0.4s;
+        @apply px-4 py-2 rounded-full outline-0 bg-white;
+    }
+    input.active {
+        width: 200px;
+        opacity: 1;
+    }
+    #clearInputBtn {
+        @apply bg-white rounded-full p-2 aspect-square absolute top-0 right-0;
+    }
+
+    &:hover {
+        input {
+            width: 200px;
+            opacity: 1;
+        }
+    }
+}
+
+.transaction {
+    animation: fade-in 0.4s forwards;
+    @apply grid grid-cols-[0.15fr_3fr_1fr_1fr_1fr] auto-cols-auto items-center justify-between px-4 py-3 rounded-xl bg-gray-100 mb-3 shadow-md;
+
+     .transaction-name {
+        @apply px-4;
+     }
+     .transaction-amount.income {
+        color: #49a800;
+     }
+     .transaction-amount.expense {
+        color: #a84000;
+     }
+    .transaction-actions {
+        @apply justify-self-end flex items-center justify-center gap-3 ;
+    }
+    button {
+        @apply bg-white!;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#editTransactionModal, #incomeModal, #expenseModal {
+    form {
+        @apply flex flex-col items-center pt-3;
+    }
+    input[type="date"] {
+        @apply px-3 py-1 rounded-lg;
+    }
+    input[type="text"] {
+        @apply bg-white w-[75%] px-4 py-3 rounded-lg transition-colors;
+    }
+    input[name="name"] {
+        @apply mt-4;
+    }
+    input[name="amount"] {
+        @apply mt-3 ;
+    }
+    .error {
+        @apply w-[75%];
+    }
+    button {
+        @apply mt-2;
+    }
+    label {
+        @apply bg-white px-4 py-2 my-3 rounded-lg inset-shadow-[-1px_-3px_4px_rgb(0_0_0/0.2)] shadow-md;
+        input {
+            @apply max-w-0 max-h-0 invisible;
+        }
+        &:has(#incomeType:checked) {
+            @apply bg-green-200;
+        }
+        &:has(#expenseType:checked) {
+            @apply bg-red-200;
+        }
+    }
+}
+
+.dropdown-container {
+    @apply relative;
+    
+    .dropdown {
+        animation: fade-in 0.3s forwards;
+        @apply absolute z-100 top-full left-0 mt-2 min-w-full w-fit text-center bg-white shadow-xl rounded-lg hidden transition-all;
+
+        .dropdown-btn {
+            @apply w-full p-2 hover:bg-gray-200 transition-colors cursor-pointer;
+        }
+        .dropdown-btn:first-child {
+            @apply rounded-t-lg;
+        }
+        .dropdown-btn:last-child {
+            @apply rounded-b-lg;
+        }
+        .dropdown-btn:not(:last-child) {
+            @apply border-b border-gray-500;
+        }
+
+        .dropdown-btn.active {
+            @apply bg-gray-300 /* inset-shadow-[1px_3px_4px_rgb(0_0_0/0.2),-1px_-3px_4px_rgb(255_255_255/1)] */;
+        }
+
+        .group:not(:last-child) {
+            @apply border-b-2;
+        }
+
+        .sub-dropdown-container {
+            @apply relative;
+
+            &:hover .sub-dropdown {
+                @apply block!;
+            }
+            
+            .sub-dropdown {
+                animation: fade-in 0.3s forwards;
+                @apply absolute z-1000 top-0 left-full min-w-full w-fit text-center bg-gray-100 shadow-[2px_2px_25px_rgb(0_0_0/0.15)] rounded-lg hidden transition-all;
+            }
+        }
+    }
+}
